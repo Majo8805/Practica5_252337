@@ -1,0 +1,13 @@
+### Probar ruta raíz
+GET http://localhost:3000
+
+### Consultar el catálogo de clases
+GET http://localhost:3000/clases
+
+### Agregar una nueva clase
+POST http://localhost:3000/clases
+Content-Type: application/json
+
+{
+  "nombre": "Crossfit"
+}
