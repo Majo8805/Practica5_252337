@@ -15,16 +15,5 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('clases')
-  obtenerClases() {
-    return this.clases;
-  }
-
-  @Post('clases')
-  crearClase(@Body() nuevaClase: any) {
-    const id = this.clases.length > 0 ? this.clases[this.clases.length - 1].id + 1 : 1;
-    const claseConId = { id, ...nuevaClase };
-    this.clases.push(claseConId);
-    return claseConId;
-  }
+  
 }

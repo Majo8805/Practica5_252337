@@ -1,0 +1,15 @@
+import { Module } from '@nestjs/common';
+import { InscripcionesService } from './inscripciones.service.js';
+import { InscripcionesController } from './inscripciones.controller.js';
+import { InscripcionMemoriaRepository } from './infra/inscripcion-memoria.repository.js';
+
+@Module({
+  providers: [InscripcionesService, 
+    {
+    provide: "INSCRIPCION_REPOSITORY",
+    useClass: InscripcionMemoriaRepository
+  }],
+  controllers: [InscripcionesController],
+})
+
+export class InscripcionesModule {}
