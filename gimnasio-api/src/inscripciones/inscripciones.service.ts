@@ -34,13 +34,18 @@ export class InscripcionesService {
         }
 
         const delHorario = await this.repo.buscarPorHorario(dto.horarioId);
+        const confirmadas = delHorario.filter((i) => i.estado === 'confirmada').length;
+
+        if (confirmadas >= horario.cupoMaximo) {
+            throw new CupoLlenoError(horario.id, horario.cupoMaximo);
+        }
 
         const yaInscrito = delHorario.some(
-            (i) => i.miembroId === dto.miembroId && i.estado === 'cancelada'
+            (i) => i.miembroId === dto.miembroId && i.estado !== 'cancelada',
         );
 
         if (yaInscrito) {
-            throw new InscripcionDuplicadaError(dto.miembroId, dto.horarioId);
+            throw new InscripcionDuplicadaError(dto.horarioId, dto.miembroId);
         }
 
         return this.repo.guardar({ horarioId: dto.horarioId, miembroId: dto.miembroId });
@@ -48,6 +53,6 @@ export class InscripcionesService {
     }
 
     cancelar(id: number): Promise<Inscripcion | null> {
-    return this.repo.cancelar(id);
+        return this.repo.cancelar(id);
     }
 }

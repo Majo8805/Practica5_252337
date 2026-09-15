@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Res } from '@nestjs/common';
+import { BadRequestException, Body, ConflictException, Controller, Delete, Get, HttpCode, NotFoundException, Param, Post, Res } from '@nestjs/common';
 import { InscripcionesService } from './inscripciones.service.js';
 import { aInscripcionDto } from './dto/inscripcion-respuesta.dto.js';
 import type { CrearInscripcionDto } from './dto/crear-inscripcion.dto.js';
 import type { Response } from 'express';
+import { CupoLlenoError, HorarioNoEncontradoError, InscripcionDuplicadaError, MiembroNoEncontradoError } from './dominio/errores.js';
 
 @Controller('inscripciones')
 export class InscripcionesController {
@@ -10,7 +11,7 @@ export class InscripcionesController {
         private readonly servicio: InscripcionesService
     ) { }
 
-    @Post()
+    @Get()
     async listar() {
         const lista = await this.servicio.listar();
         return lista.map(aInscripcionDto);
@@ -26,21 +27,33 @@ export class InscripcionesController {
     }
 
     @Post()
+    @HttpCode(201)
     async crear(
         @Body() dto: CrearInscripcionDto,
         @Res({ passthrough: true }) res: Response,
     ) {
         if (!dto.horarioId || !dto.miembroId) {
-            throw new NotFoundException('horarioId y miembroId son obligatorios');
+            throw new BadRequestException('horarioId y miembroId son obligatorios');
         }
 
         try {
             const inscripcion = await this.servicio.crear(dto);
+
             res.setHeader('Location', `/inscripciones/${inscripcion.id}`);
             return aInscripcionDto(inscripcion);
 
         } catch (error) {
-            throw new NotFoundException((error as Error).message);
+            const err = error as Error;
+
+            if (err instanceof HorarioNoEncontradoError || err instanceof MiembroNoEncontradoError) {
+                throw new NotFoundException(err.message);
+            }
+
+            if (err instanceof CupoLlenoError || err instanceof InscripcionDuplicadaError) {
+                throw new ConflictException(err.message);
+            }
+
+            throw err;
         }
     }
 
