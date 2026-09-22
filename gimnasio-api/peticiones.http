@@ -12,6 +12,8 @@ Content-Type: application/json
   "nombre": "Crossfit"
 }
 
+// ======================================================================
+
 ### Crear la primera inscripción
 POST http://localhost:3000/inscripciones
 Content-Type: application/json
@@ -51,6 +53,8 @@ Content-Type: application/json
 ### Cancelar una inscripción
 DELETE http://localhost:3000/inscripciones/1
 
+// ======================================================================
+
 ### 1. Crear un nuevo miembro
 POST http://localhost:3000/miembros
 Content-Type: application/json
@@ -64,10 +68,8 @@ Content-Type: application/json
 ### 2. Listar todos los miembros
 GET http://localhost:3000/miembros
 
-
 ### 3. Buscar un miembro por ID
 GET http://localhost:3000/miembros/1
-
 
 ### 4. Actualizar un miembro
 PATCH http://localhost:3000/miembros/1
@@ -78,6 +80,37 @@ Content-Type: application/json
   "activo": false
 }
 
-
 ### 5. Eliminar un miembro
 DELETE http://localhost:3000/miembros/2
+
+// ======================================================================
+
+### 1. Crear un horario
+POST http://localhost:3000/horarios
+Content-Type: application/json
+
+{
+  "claseId": 104,
+  "dia": "Jueves",
+  "horaInicio": "09:00",
+  "cupoMaximo": 10,
+  "entrenador": "Luis"
+}
+
+### 2. Listar horarios
+GET http://localhost:3000/horarios
+
+### 3. Buscar horario por ID
+GET http://localhost:3000/horarios/1
+
+### 4. Actualizar horario
+PATCH http://localhost:3000/horarios/1
+Content-Type: application/json
+
+{
+  "cupoMaximo": 25,
+  "entrenador": "Miguel"
+}
+
+### 5. Eliminar horario
+DELETE http://localhost:3000/horarios/2

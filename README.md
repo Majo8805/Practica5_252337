@@ -28,10 +28,16 @@ Preguntas Practica 7
 - ¿Por qué la interfaz MiembroRepository no menciona Express, NestJS ni memoria?
 Porque la interfaz pertenece a la capa de Dominio, la cual dicta las reglas de negocio en TypeScript y debe de ser independiente de cualquier framework o base de datos
 - ¿Qué palabra de la clase MiembroMemoriaRepository es la que promete cumplir la interfaz del paso anterior?
-La palabra clave es implements, la cual obliga a la clase a desarrollar todos los métodos definidos en la interfaz
+La palabra clave es implements, la cual obliga a la clase a desarrollar todos los metodos definidos en la interfaz
 - ¿Por qué el archivo miembros.service.ts no sabe qué es una petición HTTP?
-Porque es un componente de la capa de Aplicación. Y su única responsabilidad es manejar la lógica de negocio y conectarse al repositorio
+Porque es un componente de la capa de Aplicacion. Y su unica responsabilidad es manejar la logica de negocio y conectarse al repositorio
 - ¿Por qué el Service se inyecta sin token en el Controller, y el repositorio sí necesita uno?
 Porque el Service es una clase concreta que NestJS puede instanciar directamente, mientras que el repositorio en el Controller se pide como una Interfaz.
 - ¿Qué prueba, en los hechos, que agregar Miembros no rompió nada de Inscripciones?
-Que al crear Miembros en su propia carpeta y módulo aislados, sin modificar el código interno de Inscripciones, asegura que sus funcionamientos son independientes. Si se probaran las peticiones de /inscripciones, seguirian respondiendo correctamente.
+Que al crear Miembros en su propia carpeta y modulo aislados, sin modificar el codigo interno de Inscripciones, asegura que sus funcionamientos son independientes. Si se probaran las peticiones de /inscripciones, seguirian respondiendo correctamente.
+
+Preguntas Asignacion 1
+- ¿Por qué el Service se inyecta sin token en el Controller, y el repositorio sí necesita uno?
+Porque el Service es una clase concreta que NestJS puede instanciar automaticamente. Mientras que el repositorio, como es una interfaz, necesita el token
+- Si mandas un claseId que no es número, ¿qué código de estado esperarías, y por qué este Controller no lo detecta?
+Se esperaria un error 400 Bad Request. Por que TypeScript solo revisa tipos al programar, no al ejecutar
