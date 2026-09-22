@@ -50,3 +50,34 @@ Content-Type: application/json
 
 ### Cancelar una inscripción
 DELETE http://localhost:3000/inscripciones/1
+
+### 1. Crear un nuevo miembro
+POST http://localhost:3000/miembros
+Content-Type: application/json
+
+{
+  "nombre": "Ana Lopez",
+  "correo": "ana@test.com",
+  "membresia": "Premium"
+}
+
+### 2. Listar todos los miembros
+GET http://localhost:3000/miembros
+
+
+### 3. Buscar un miembro por ID
+GET http://localhost:3000/miembros/1
+
+
+### 4. Actualizar un miembro
+PATCH http://localhost:3000/miembros/1
+Content-Type: application/json
+
+{
+  "membresia": "VIP",
+  "activo": false
+}
+
+
+### 5. Eliminar un miembro
+DELETE http://localhost:3000/miembros/2

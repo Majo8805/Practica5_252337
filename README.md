@@ -23,3 +23,15 @@ Por que el repositorio se inyecta usando una interfaz que necesita un token.
 El error 400 indica que la petición del cliente está mal formada o le faltan datos obligatorios; mientras que el error 409 indica que la petición está bien, pero choca con el estado actual del sistema o las reglas de negocio
 - ¿Por qué cambió el código de estado de esa última petición? (Al cancelar y volver a intentar) 
 Porque al principio la petición chocaba con las reglas de negocio y devolvía un 409
+
+Preguntas Practica 7
+- ¿Por qué la interfaz MiembroRepository no menciona Express, NestJS ni memoria?
+Porque la interfaz pertenece a la capa de Dominio, la cual dicta las reglas de negocio en TypeScript y debe de ser independiente de cualquier framework o base de datos
+- ¿Qué palabra de la clase MiembroMemoriaRepository es la que promete cumplir la interfaz del paso anterior?
+La palabra clave es implements, la cual obliga a la clase a desarrollar todos los métodos definidos en la interfaz
+- ¿Por qué el archivo miembros.service.ts no sabe qué es una petición HTTP?
+Porque es un componente de la capa de Aplicación. Y su única responsabilidad es manejar la lógica de negocio y conectarse al repositorio
+- ¿Por qué el Service se inyecta sin token en el Controller, y el repositorio sí necesita uno?
+Porque el Service es una clase concreta que NestJS puede instanciar directamente, mientras que el repositorio en el Controller se pide como una Interfaz.
+- ¿Qué prueba, en los hechos, que agregar Miembros no rompió nada de Inscripciones?
+Que al crear Miembros en su propia carpeta y módulo aislados, sin modificar el código interno de Inscripciones, asegura que sus funcionamientos son independientes. Si se probaran las peticiones de /inscripciones, seguirian respondiendo correctamente.
